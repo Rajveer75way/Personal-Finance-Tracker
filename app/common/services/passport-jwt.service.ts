@@ -70,12 +70,27 @@ export const initPassport = (): void => {
     )
   );
 };
-
 export const createUserTokens = (user: Omit<IUser, "password">) => {
   const jwtSecret = process.env.JWT_SECRET ?? "";
-  const token = jwt.sign(user, jwtSecret);
-  return { accessToken: token, refreshToken: "" };
+  const refreshTokenSecret = process.env.JWT_REFRESH_SECRET ?? "";
+
+  // Generate the access token (short-lived)
+  const accessToken = jwt.sign(
+    { userId: user._id, email: user.email, role: user.role },
+    jwtSecret,
+    { expiresIn: "15m" } // Access token expires in 15 minutes
+  );
+
+  // Generate the refresh token (longer-lived)
+  const refreshToken = jwt.sign(
+    { userId: user._id },
+    refreshTokenSecret,
+    { expiresIn: "7d" } // Refresh token expires in 7 days
+  );
+
+  return { accessToken, refreshToken };
 };
+
 
 export const decodeToken = (token: string) => {
   // const jwtSecret = process.env.JWT_SECRET ?? "";
