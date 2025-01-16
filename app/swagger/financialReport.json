@@ -1,0 +1,114 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Financial Report API",
+      "version": "1.0.0",
+      "description": "API to generate and send financial reports."
+    },
+    "paths": {
+      "/api/financial/generate-financial-report": {
+        "post": {
+          "summary": "Generate and send a financial report",
+          "description": "Generates a financial report based on the specified date range and category, and sends the generated report to the user.",
+          "tags": ["Financial Reports"],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "startDate": {
+                      "type": "string",
+                      "format": "date",
+                      "example": "2025-01-01",
+                      "description": "Start date for the report."
+                    },
+                    "endDate": {
+                      "type": "string",
+                      "format": "date",
+                      "example": "2025-01-31",
+                      "description": "End date for the report."
+                    },
+                    "category": {
+                      "type": "string",
+                      "example": "Food",
+                      "description": "Category for which the report is to be generated."
+                    }
+                  },
+                  "required": ["startDate", "endDate", "category"]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successfully generated and sent the financial report.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": true
+                      },
+                      "message": {
+                        "type": "string",
+                        "example": "Financial report generated and sent successfully."
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid input or missing required fields.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": false
+                      },
+                      "message": {
+                        "type": "string",
+                        "example": "Invalid input data."
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal server error.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "success": {
+                        "type": "boolean",
+                        "example": false
+                      },
+                      "message": {
+                        "type": "string",
+                        "example": "Error generating the financial report."
+                      },
+                      "error": {
+                        "type": "object",
+                        "description": "Details of the error."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  

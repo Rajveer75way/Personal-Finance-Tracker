@@ -1,12 +1,12 @@
 import express from "express";
-import userRoutes from "./user/user.route";
-import taskRoutes from "./task/task.route";
-
-// routes
+import expensesRoutes from "./modules/expenses/expenses.route";
+import budgetRoutes from "./modules/budget/budget.route";
+import financialRoutes from "./modules/financialReport/financial.route";
 const router = express.Router();
 
-router.use("/users", userRoutes);
-router.use("/tasks", taskRoutes);
+router.use('/expenses', expensesRoutes);
+router.use('/budgets', budgetRoutes);
+router.use('/financial', financialRoutes);
 
 
 export default router;

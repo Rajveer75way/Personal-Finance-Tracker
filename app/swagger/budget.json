@@ -1,0 +1,174 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Personal Finance Tracker API",
+      "version": "1.0.0",
+      "description": "API for managing budgets in a personal finance tracker"
+    },
+    "paths": {
+      "/api/budgets": {
+        "post": {
+          "summary": "Create a new budget",
+          "tags": ["Budgets"],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "amount": { "type": "number" },
+                    "category": { "type": "string" },
+                    "startDate": { "type": "string", "format": "date" },
+                    "endDate": { "type": "string", "format": "date" },
+                    "description": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Budget created successfully"
+            },
+            "400": {
+              "description": "Bad request"
+            }
+          }
+        },
+        "get": {
+          "summary": "Get all budgets",
+          "tags": ["Budgets"],
+          "responses": {
+            "200": {
+              "description": "List of budgets"
+            },
+            "500": {
+              "description": "Internal server error"
+            }
+          }
+        }
+      },
+      "/api/budgets/{id}": {
+        "get": {
+          "summary": "Get a budget by ID",
+          "tags": ["Budgets"],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "description": "Budget ID",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Budget retrieved successfully"
+            },
+            "404": {
+              "description": "Budget not found"
+            }
+          }
+        },
+        "put": {
+          "summary": "Update a budget by ID",
+          "tags": ["Budgets"],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "description": "Budget ID",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "amount": { "type": "number" },
+                    "category": { "type": "string" },
+                    "startDate": { "type": "string", "format": "date" },
+                    "endDate": { "type": "string", "format": "date" },
+                    "description": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Budget updated successfully"
+            },
+            "400": {
+              "description": "Bad request"
+            },
+            "404": {
+              "description": "Budget not found"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete a budget by ID",
+          "tags": ["Budgets"],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "description": "Budget ID",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Budget deleted successfully"
+            },
+            "404": {
+              "description": "Budget not found"
+            }
+          }
+        }
+      },
+      "/api/budgets/particular-category-date": {
+        "post": {
+          "summary": "Get budgets for a particular category and date range",
+          "tags": ["Budgets"],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "category": { "type": "string" },
+                    "startDate": { "type": "string", "format": "date" },
+                    "endDate": { "type": "string", "format": "date" }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Budgets data"
+            },
+            "400": {
+              "description": "Invalid input data"
+            }
+          }
+        }
+      }
+    }
+  }
+  
