@@ -1,0 +1,229 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Personal Finance Tracker API",
+    "version": "1.0.0",
+    "description": "API for tracking expenses, budgets, and analyzing spending trends"
+  },
+  "paths": {
+    "/api/expenses": {
+      "post": {
+        "summary": "Create a new expense",
+        "tags": ["Expenses"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": { "type": "number" },
+                  "category": { "type": "string" },
+                  "date": { "type": "string" },
+                  "description": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Expense created successfully"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all expenses",
+        "tags": ["Expenses"],
+        "responses": {
+          "200": {
+            "description": "List of expenses"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/expenses/{id}": {
+      "get": {
+        "summary": "Get an expense by ID",
+        "tags": ["Expenses"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Expense ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expense retrieved successfully"
+          },
+          "404": {
+            "description": "Expense not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update an expense by ID",
+        "tags": ["Expenses"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Expense ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": { "type": "number" },
+                  "category": { "type": "string" },
+                  "date": { "type": "string" },
+                  "description": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Expense updated successfully"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Expense not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an expense by ID",
+        "tags": ["Expenses"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Expense ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expense deleted successfully"
+          },
+          "404": {
+            "description": "Expense not found"
+          }
+        }
+      }
+    },
+    "/api/expenses/all-category-date": {
+      "post": {
+        "summary": "Get expenses grouped by category and date range",
+        "tags": ["Expenses"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "startDate": { "type": "string" },
+                  "endDate": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Expenses data"
+          },
+          "400": {
+            "description": "Invalid date range"
+          }
+        }
+      }
+    },
+    "/api/expenses/particular-category-date": {
+      "post": {
+        "summary": "Get expenses for a particular category within a date range",
+        "tags": ["Expenses"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "category": { "type": "string" },
+                  "startDate": { "type": "string" },
+                  "endDate": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Expenses data"
+          },
+          "400": {
+            "description": "Invalid input data"
+          }
+        }
+      }
+    },
+    "/api/expenses/spending-trends": {
+      "post": {
+        "summary": "Get spending trends",
+        "tags": ["Expenses"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "category": { "type": "string" },
+                  "startDate": { "type": "string" },
+                  "endDate": { "type": "string" }
+
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Spending trends retrieved successfully"
+          },
+          "400": {
+            "description": "Invalid category or months"
+          }
+        }
+      }
+    }
+  }
+}
